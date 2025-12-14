@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "869537642104",
+    "project_id": "auth-smart-news-cd536",
+    "storage_bucket": "auth-smart-news-cd536.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869537642104:android:6dc680f2a5e67321111f8d",
+        "android_client_info": {
+          "package_name": "com.example.auth_smart_news"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBR34Vdxd9JOMypPo_xl83FyVzBjigynIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
