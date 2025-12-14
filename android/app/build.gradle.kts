@@ -50,4 +50,8 @@ dependencies {
 
     // Firebase Auth
     implementation("com.google.firebase:firebase-auth")
+
+    // Firebase google
+    implementation("com.google.android:gms:play-services-auth:21.2.0")
+
 }
