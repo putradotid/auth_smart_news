@@ -10,15 +10,13 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView( // FIX OVERFLOW UI
+        child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 40),
 
-                // Logo
                 Image.asset("assets/logo/Frame.png", width: 120),
 
                 const SizedBox(height: 20),
@@ -38,7 +36,7 @@ class LoginScreen extends StatelessWidget {
 
                 const SizedBox(height: 35),
 
-                // GOOGLE SIGN-IN BUTTON
+                // GOOGLE LOGIN BUTTON
                 Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -54,7 +52,6 @@ class LoginScreen extends StatelessWidget {
                   ),
                   child: TextButton(
                     onPressed: () async {
-                      // Tampilkan loading dialog
                       showDialog(
                         context: context,
                         barrierDismissible: false,
@@ -68,7 +65,6 @@ class LoginScreen extends StatelessWidget {
                         Navigator.pop(context); // tutup loading
 
                         if (user != null) {
-                          // Login sukses → pindah ke halaman success
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -76,7 +72,6 @@ class LoginScreen extends StatelessWidget {
                             ),
                           );
                         } else {
-                          // User menutup popup login
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text("Login dibatalkan pengguna"),
@@ -84,11 +79,9 @@ class LoginScreen extends StatelessWidget {
                           );
                         }
                       } catch (e) {
-                        Navigator.pop(context); // tutup loading
+                        Navigator.pop(context);
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Google Login gagal: $e"),
-                          ),
+                          SnackBar(content: Text("Google Login gagal: $e")),
                         );
                       }
                     },
@@ -108,13 +101,13 @@ class LoginScreen extends StatelessWidget {
 
                 const SizedBox(height: 20),
 
-                // Divider OR
                 Row(
                   children: const [
                     Expanded(child: Divider(thickness: 1.2)),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 12),
-                      child: Text("Or", style: TextStyle(color: Colors.black54)),
+                      child:
+                          Text("Or", style: TextStyle(color: Colors.black54)),
                     ),
                     Expanded(child: Divider(thickness: 1.2)),
                   ],
@@ -122,7 +115,6 @@ class LoginScreen extends StatelessWidget {
 
                 const SizedBox(height: 20),
 
-                // EMAIL LOGIN BUTTON
                 SizedBox(
                   width: double.infinity,
                   height: 52,
@@ -150,14 +142,13 @@ class LoginScreen extends StatelessWidget {
 
                 const SizedBox(height: 50),
 
-                // REGISTER LINK
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text("Kamu belum punya akun? "),
                     GestureDetector(
                       onTap: () {
-                        // TODO: Navigate to register screen
+                        // TODO: Navigate to register
                       },
                       child: const Text(
                         "Daftar Sekarang",

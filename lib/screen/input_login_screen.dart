@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'success_login_screen.dart';
+import 'package:auth_smart_news/auth_service.dart';
 
 class InputLoginScreen extends StatefulWidget {
   const InputLoginScreen({super.key});
@@ -12,6 +13,7 @@ class _InputLoginScreenState extends State<InputLoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool obscurePassword = true;
+  bool loading = false;
 
   bool get isFormFilled =>
       emailController.text.trim().isNotEmpty &&
@@ -20,10 +22,36 @@ class _InputLoginScreenState extends State<InputLoginScreen> {
   @override
   void initState() {
     super.initState();
-
-    // LISTENER UNTUK MEMPERBARUI UI KETIKA USER MENGETIK
     emailController.addListener(() => setState(() {}));
     passwordController.addListener(() => setState(() {}));
+  }
+
+  Future<void> handleEmailLogin() async {
+    if (!isFormFilled) return;
+
+    setState(() => loading = true);
+
+    try {
+      final user = await AuthService().signInWithEmail(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      if (user != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const SuccessLoginScreen(),
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Login gagal: $e")),
+      );
+    }
+
+    setState(() => loading = false);
   }
 
   @override
@@ -54,8 +82,6 @@ class _InputLoginScreenState extends State<InputLoginScreen> {
                       ),
                     ),
 
-                    const SizedBox(height: 6),
-
                     const Text(
                       "Login ke akun LensNews",
                       style: TextStyle(color: Colors.black54, fontSize: 14),
@@ -63,34 +89,22 @@ class _InputLoginScreenState extends State<InputLoginScreen> {
 
                     const SizedBox(height: 30),
 
-                    // EMAIL FIELD
                     _buildTextField(
                       controller: emailController,
-                      hint: "Masukkan nomor telepon atau email anda",
+                      hint: "Masukkan email anda",
                     ),
 
                     const SizedBox(height: 16),
 
-                    // PASSWORD FIELD
                     _buildPasswordField(),
 
                     const SizedBox(height: 26),
 
-                    // LOGIN BUTTON
                     SizedBox(
                       width: double.infinity,
                       height: 52,
                       child: ElevatedButton(
-                        onPressed: isFormFilled
-                            ? () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const SuccessLoginScreen(),
-                                  ),
-                                );
-                              }
-                            : null,
+                        onPressed: loading ? null : handleEmailLogin,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: isFormFilled
                               ? const Color(0xFF1C6B4A)
@@ -102,35 +116,24 @@ class _InputLoginScreenState extends State<InputLoginScreen> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        child: const Text(
-                          "Masuk Sekarang",
-                          style: TextStyle(fontSize: 16),
-                        ),
+                        child: loading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : const Text(
+                                "Masuk Sekarang",
+                                style: TextStyle(fontSize: 16),
+                              ),
                       ),
                     ),
 
                     const SizedBox(height: 20),
-
-                    Center(
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: const Text(
-                          "Lupa kata sandi?",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
             ),
 
-            // FOOTER SIGN UP
             Container(
-              width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 18),
               decoration: BoxDecoration(
                 border: Border(top: BorderSide(color: Colors.grey.shade300)),
@@ -158,7 +161,6 @@ class _InputLoginScreenState extends State<InputLoginScreen> {
     );
   }
 
-  // REUSABLE INPUT WIDGET
   Widget _buildTextField({
     required TextEditingController controller,
     required String hint,
