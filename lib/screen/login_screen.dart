@@ -1,3 +1,4 @@
+import 'package:auth_smart_news/screen/register_screen.dart';
 import 'package:auth_smart_news/screen/success_login_screen.dart';
 import 'package:flutter/material.dart';
 import 'input_login_screen.dart';
@@ -148,7 +149,10 @@ class LoginScreen extends StatelessWidget {
                     const Text("Kamu belum punya akun? "),
                     GestureDetector(
                       onTap: () {
-                        // TODO: Navigate to register
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const RegisterScreen()),
+                        );
                       },
                       child: const Text(
                         "Daftar Sekarang",
