@@ -7,10 +7,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // Google Sign-In untuk Android/iOS
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    clientId:
-        "869537642104-7jvh4g2otte0c9ph8qjsmqg76r1sdiav.apps.googleusercontent.com",
-  );
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   // =====================================================================
   // AUTH STATE LISTENER
